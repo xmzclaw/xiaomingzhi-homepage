@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>肖铭志 - 综合能源场景方案经理</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Noto Sans SC', 'Inter', 'sans-serif'],
+        display: ['Inter', 'Noto Sans SC', 'sans-serif'],
+      },
+      colors: {
+        dark: { 900: '#0a0a0f', 800: '#12121a', 700: '#1a1a28', 600: '#242436' },
+        neon: { green: '#00ff88', cyan: '#00d4ff', blue: '#4f8fff', purple: '#8b5cf6' },
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: #0a0a0f; color: #e2e8f0; font-family: 'Noto Sans SC', 'Inter', sans-serif; overflow-x: hidden; }
+
+  /* Animated gradient background */
+  .hero-bg {
+    background: linear-gradient(135deg, #0a0a0f 0%, #0d1a12 25%, #0a0a0f 50%, #0a1220 75%, #0a0a0f 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 12s ease infinite;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(0,255,136,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 50%, rgba(0,212,255,0.05) 0%, transparent 50%);
+    animation: float 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, -30px) rotate(2deg); }
+    66% { transform: translate(-20px, 20px) rotate(-1deg); }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0,255,136,0.2), 0 0 60px rgba(0,255,136,0.05); }
+    50% { box-shadow: 0 0 30px rgba(0,255,136,0.3), 0 0 80px rgba(0,255,136,0.1); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideRight {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes countUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .animate-on-scroll.slide-right {
+    transform: translateX(-30px);
+  }
+  .animate-on-scroll.slide-right.visible {
+    transform: translateX(0);
+  }
+
+  /* Glowing text */
+  .glow-text {
+    text-shadow: 0 0 40px rgba(0,255,136,0.15), 0 0 80px rgba(0,255,136,0.05);
+  }
+
+  /* Card hover */
+  .project-card {
+    background: linear-gradient(145deg, rgba(26,26,40,0.8), rgba(18,18,26,0.9));
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, #00ff88, #00d4ff);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-card:hover {
+    border-color: rgba(0,255,136,0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(0,255,136,0.05);
+  }
+
+  /* Skill tag */
+  .skill-tag {
+    background: rgba(0,255,136,0.06);
+    border: 1px solid rgba(0,255,136,0.15);
+    color: #00ff88;
+    transition: all 0.3s ease;
+  }
+  .skill-tag:hover {
+    background: rgba(0,255,136,0.12);
+    border-color: rgba(0,255,136,0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,255,136,0.1);
+  }
+
+  .skill-tag-cyan {
+    background: rgba(0,212,255,0.06);
+    border: 1px solid rgba(0,212,255,0.15);
+    color: #00d4ff;
+  }
+  .skill-tag-cyan:hover {
+    background: rgba(0,212,255,0.12);
+    border-color: rgba(0,212,255,0.4);
+    box-shadow: 0 4px 15px rgba(0,212,255,0.1);
+  }
+
+  .skill-tag-purple {
+    background: rgba(139,92,246,0.06);
+    border: 1px solid rgba(139,92,246,0.15);
+    color: #a78bfa;
+  }
+  .skill-tag-purple:hover {
+    background: rgba(139,92,246,0.12);
+    border-color: rgba(139,92,246,0.4);
+    box-shadow: 0 4px 15px rgba(139,92,246,0.1);
+  }
+
+  /* Timeline */
+  .timeline-line {
+    background: linear-gradient(180deg, #00ff88 0%, #00d4ff 50%, rgba(0,212,255,0.1) 100%);
+  }
+  .timeline-dot {
+    background: #0a0a0f;
+    border: 3px solid #00ff88;
+    animation: pulse-glow 3s infinite;
+  }
+  .timeline-dot-2 {
+    background: #0a0a0f;
+    border: 3px solid #00d4ff;
+    box-shadow: 0 0 20px rgba(0,212,255,0.2);
+  }
+
+  /* Stat card */
+  .stat-card {
+    background: linear-gradient(145deg, rgba(0,255,136,0.05), rgba(0,212,255,0.03));
+    border: 1px solid rgba(0,255,136,0.1);
+    transition: all 0.3s ease;
+  }
+  .stat-card:hover {
+    border-color: rgba(0,255,136,0.3);
+    box-shadow: 0 0 30px rgba(0,255,136,0.08);
+  }
+
+  /* CTA button */
+  .cta-btn {
+    background: linear-gradient(135deg, #00ff88, #00d4ff);
+    color: #0a0a0f;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  .cta-btn:hover::before { left: 100%; }
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,255,136,0.3);
+  }
+
+  /* Modal */
+  .modal-overlay {
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal-content {
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .modal-overlay.active .modal-content {
+    transform: scale(1) translateY(0);
+  }
+
+  /* Nav */
+  .nav-glass {
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s ease;
+  }
+  .nav-glass.scrolled {
+    background: rgba(10,10,15,0.95);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  }
+
+  /* Section divider */
+  .section-divider {
+    background: linear-gradient(90deg, transparent, rgba(0,255,136,0.2), rgba(0,212,255,0.2), transparent);
+    height: 1px;
+  }
+
+  /* Grid pattern */
+  .grid-pattern {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0a0a0f; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,255,136,0.3); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(0,255,136,0.5); }
+</style>
+</head>
+<body class="grid-pattern">
+
+<!-- Navigation -->
+<nav id="navbar" class="nav-glass fixed top-0 left-0 right-0 z-50 px-6 py-4">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <a href="#" class="text-xl font-bold tracking-tight">
+      <span class="text-neon-green">X</span><span class="text-white">MZ</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm text-gray-400">
+      <a href="#about" class="hover:text-neon-green transition-colors">关于</a>
+      <a href="#skills" class="hover:text-neon-green transition-colors">能力</a>
+      <a href="#experience" class="hover:text-neon-green transition-colors">经历</a>
+      <a href="#projects" class="hover:text-neon-green transition-colors">项目</a>
+      <a href="#education" class="hover:text-neon-green transition-colors">教育</a>
+      <button onclick="openContactModal()" class="cta-btn px-5 py-2 rounded-full text-sm">联系我</button>
+    </div>
+    <button onclick="openContactModal()" class="md:hidden cta-btn px-4 py-2 rounded-full text-sm">联系我</button>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-bg min-h-screen flex items-center justify-center relative">
+  <div class="relative z-10 text-center px-6 max-w-4xl mx-auto" style="animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards">
+    <p class="text-neon-green text-sm tracking-[0.3em] uppercase mb-6 font-medium" style="animation: fadeIn 1s 0.3s forwards; opacity:0">综合能源场景方案经理</p>
+    <h1 class="font-display text-6xl md:text-8xl lg:text-9xl font-black text-white glow-text mb-6 tracking-tight" style="animation: slideUp 1s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity:0">
+      肖铭志
+    </h1>
+    <p class="text-xl md:text-2xl text-gray-400 font-light mb-4" style="animation: fadeIn 1s 0.6s forwards; opacity:0">
+      微电网 &middot; 虚拟电厂 &middot; 光储充一体化
+    </p>
+    <p class="text-lg text-gray-500 mb-10 max-w-2xl mx-auto" style="animation: fadeIn 1s 0.8s forwards; opacity:0">
+      从需求到落地，用数据和方案为客户创造实际价值
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4" style="animation: slideUp 1s 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity:0">
+      <button onclick="openContactModal()" class="cta-btn px-8 py-3.5 rounded-full text-base tracking-wide">
+        联系我
+      </button>
+      <a href="#about" class="px-8 py-3.5 rounded-full border border-white/10 text-gray-300 hover:border-neon-green/40 hover:text-neon-green transition-all text-base">
+        了解更多 &darr;
+      </a>
+    </div>
+  </div>
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2" style="animation: fadeIn 1s 1.5s forwards; opacity:0">
+    <div class="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center pt-2">
+      <div class="w-1 h-2 bg-neon-green/60 rounded-full" style="animation: slideUp 1.5s infinite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-24 px-6 relative">
+  <div class="max-w-6xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <p class="text-neon-green text-sm tracking-[0.2em] uppercase mb-3">About</p>
+      <h2 class="text-4xl md:text-5xl font-black text-white">关于我</h2>
+    </div>
+    <div class="grid md:grid-cols-5 gap-12 items-start">
+      <div class="md:col-span-3 animate-on-scroll">
+        <p class="text-lg text-gray-300 leading-relaxed mb-6">
+          具备新能源与综合能源项目一线实践经验，长期处于<span class="text-neon-green font-medium">「客户需求—技术方案—收益分析—实施落地」</span>核心链路。熟悉光伏、储能、微电网、EMC、园区低碳等场景，能够围绕客户需求开展方案设计、收益测算、项目推进及交付协同。
+        </p>
+        <p class="text-lg text-gray-400 leading-relaxed">
+          中级工程师（电气工程），中共党员。兼具电气专业与工程实施基础，以及面向工商商业客户的综合能源解决方案思维。希望在综合能源管理与场景创新方向持续深耕，发挥自身在方案设计、售前支持和项目协同方面的优势。
+        </p>
+      </div>
+      <div class="md:col-span-2 grid grid-cols-2 gap-4">
+        <div class="stat-card rounded-xl p-5 text-center animate-on-scroll">
+          <p class="text-3xl font-black text-neon-green font-display">5<span class="text-lg">亿+</span></p>
+          <p class="text-sm text-gray-400 mt-1">项目规模</p>
+        </div>
+        <div class="stat-card rounded-xl p-5 text-center animate-on-scroll">
+          <p class="text-3xl font-black text-neon-cyan font-display">62.5<span class="text-lg">%</span></p>
+          <p class="text-sm text-gray-400 mt-1">银行贷款支持</p>
+        </div>
+        <div class="stat-card rounded-xl p-5 text-center animate-on-scroll">
+          <p class="text-3xl font-black text-neon-green font-display">30<span class="text-lg">+</span></p>
+          <p class="text-sm text-gray-400 mt-1">节能改造小区</p>
+        </div>
+        <div class="stat-card rounded-xl p-5 text-center animate-on-scroll">
+          <p class="text-2xl font-black text-neon-cyan font-display leading-tight">2024</p>
+          <p class="text-sm text-gray-400 mt-1">青岛市赋能中心</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- Skills Section -->
+<section id="skills" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <p class="text-neon-green text-sm tracking-[0.2em] uppercase mb-3">Skills</p>
+      <h2 class="text-4xl md:text-5xl font-black text-white">专业能力</h2>
+    </div>
+
+    <div class="space-y-10">
+      <!-- Domain -->
+      <div class="animate-on-scroll slide-right">
+        <h3 class="text-sm text-gray-500 uppercase tracking-wider mb-4">综合能源领域</h3>
+        <div class="flex flex-wrap gap-3">
+          <span class="skill-tag px-4 py-2 rounded-lg text-sm">光伏</span>
+          <span class="skill-tag px-4 py-2 rounded-lg text-sm">储能</span>
+          <span class="skill-tag px-4 py-2 rounded-lg text-sm">微电网</span>
+          <span class="skill-tag px-4 py-2 rounded-lg text-sm">EMC</span>
+          <span class="skill-tag px-4 py-2 rounded-lg text-sm">园区低碳</span>
+          <span class="skill-tag px-4 py-2 rounded-lg text-sm">源网荷储一体化</span>
+          <span class="skill-tag px-4 py-2 rounded-lg text-sm">虚拟电厂 (VPP)</span>
+          <span class="skill-tag px-4 py-2 rounded-lg text-sm">光储充一体化</span>
+          <span class="skill-tag px-4 py-2 rounded-lg text-sm">合同能源管理</span>
+        </div>
+      </div>
+      <!-- Method -->
+      <div class="animate-on-scroll slide-right">
+        <h3 class="text-sm text-gray-500 uppercase tracking-wider mb-4">方案与项目管理</h3>
+        <div class="flex flex-wrap gap-3">
+          <span class="skill-tag-cyan skill-tag px-4 py-2 rounded-lg text-sm">客户需求分析</span>
+          <span class="skill-tag-cyan skill-tag px-4 py-2 rounded-lg text-sm">技术方案设计</span>
+          <span class="skill-tag-cyan skill-tag px-4 py-2 rounded-lg text-sm">节能收益测算</span>
+          <span class="skill-tag-cyan skill-tag px-4 py-2 rounded-lg text-sm">投资预算分析</span>
+          <span class="skill-tag-cyan skill-tag px-4 py-2 rounded-lg text-sm">项目全流程推进</span>
+          <span class="skill-tag-cyan skill-tag px-4 py-2 rounded-lg text-sm">跨团队协同</span>
+          <span class="skill-tag-cyan skill-tag px-4 py-2 rounded-lg text-sm">施工交付管理</span>
+        </div>
+      </div>
+      <!-- AI & Tools -->
+      <div class="animate-on-scroll slide-right">
+        <h3 class="text-sm text-gray-500 uppercase tracking-wider mb-4">AI 工具与软件</h3>
+        <div class="flex flex-wrap gap-3">
+          <span class="skill-tag-purple skill-tag px-4 py-2 rounded-lg text-sm">AI 测算工具 (DRe)</span>
+          <span class="skill-tag-purple skill-tag px-4 py-2 rounded-lg text-sm">Enerbot AI 调控</span>
+          <span class="skill-tag-purple skill-tag px-4 py-2 rounded-lg text-sm">能源数字化建模</span>
+          <span class="skill-tag-purple skill-tag px-4 py-2 rounded-lg text-sm">AutoCAD</span>
+          <span class="skill-tag-purple skill-tag px-4 py-2 rounded-lg text-sm">天正电气</span>
+          <span class="skill-tag-purple skill-tag px-4 py-2 rounded-lg text-sm">Revit / BIM</span>
+          <span class="skill-tag-purple skill-tag px-4 py-2 rounded-lg text-sm">Office 套件</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- Experience Section -->
+<section id="experience" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <p class="text-neon-green text-sm tracking-[0.2em] uppercase mb-3">Experience</p>
+      <h2 class="text-4xl md:text-5xl font-black text-white">工作经历</h2>
+    </div>
+
+    <div class="relative">
+      <!-- Timeline line -->
+      <div class="absolute left-0 md:left-8 top-0 bottom-0 w-0.5 timeline-line hidden md:block"></div>
+
+      <!-- Job 1 -->
+      <div class="relative md:pl-24 mb-16">
+        <div class="hidden md:block absolute left-[25px] top-1 w-4 h-4 rounded-full timeline-dot"></div>
+        <div class="animate-on-scroll slide-right">
+          <div class="flex flex-col md:flex-row md:items-center gap-2 mb-4">
+            <span class="text-neon-green font-mono text-sm">2023.10 - 至今</span>
+            <span class="md:ml-auto text-xs px-3 py-1 rounded-full bg-neon-green/10 text-neon-green border border-neon-green/20">在职</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-1">山东海飞特数字科技有限公司</h3>
+          <p class="text-lg text-neon-cyan font-medium mb-4">解决方案经理 / 项目经理</p>
+          <ul class="space-y-3 text-gray-400">
+            <li class="flex items-start gap-3">
+              <span class="text-neon-green mt-1.5 text-xs">&#9670;</span>
+              <span>负责光储充、微电网、合同能源管理等综合能源项目的方案设计与全过程推进，覆盖客户需求调研、技术路径制定、收益测算、资源协调、施工交付及运维衔接</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neon-green mt-1.5 text-xs">&#9670;</span>
+              <span>面向工商商业客户输出综合能源解决方案，结合负荷特征、节能需求、投资收益及实施条件进行方案比选与价值测算</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neon-green mt-1.5 text-xs">&#9670;</span>
+              <span>参与项目售前技术支持，负责技术交流、方案编制、投资预算及可行性分析，配合商务推进项目立项</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neon-green mt-1.5 text-xs">&#9670;</span>
+              <span>协同设计院、施工单位、客户及相关合作方，推动项目从需求分析到实施交付闭环落地</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Job 2 -->
+      <div class="relative md:pl-24">
+        <div class="hidden md:block absolute left-[25px] top-1 w-4 h-4 rounded-full timeline-dot-2"></div>
+        <div class="animate-on-scroll slide-right">
+          <div class="flex flex-col md:flex-row md:items-center gap-2 mb-4">
+            <span class="text-neon-cyan font-mono text-sm">2020.07 - 2023.10</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-1">中铁一院集团山东建筑设计院有限公司</h3>
+          <p class="text-lg text-gray-400 font-medium mb-4">电气工程师</p>
+          <ul class="space-y-3 text-gray-400">
+            <li class="flex items-start gap-3">
+              <span class="text-neon-cyan mt-1.5 text-xs">&#9670;</span>
+              <span>负责工业和民用建筑项目的电气专业施工图设计，包括供配电、照明、防雷接地等系统</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neon-cyan mt-1.5 text-xs">&#9670;</span>
+              <span>独立完成多种类型建筑的电气图纸绘制、计算书编制及跨专业协同设计</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neon-cyan mt-1.5 text-xs">&#9670;</span>
+              <span>参与轨道交通、公建、商业综合体及军民融合类项目，应用 BIM/三维协同提升设计精度</span>
+            </li>
+          </ul>
+          <div class="flex flex-wrap gap-3 mt-5">
+            <span class="text-xs px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">2021 年度最佳新人</span>
+            <span class="text-xs px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">2022 年度优秀员工</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- Projects Section -->
+<section id="projects" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <p class="text-neon-green text-sm tracking-[0.2em] uppercase mb-3">Projects</p>
+      <h2 class="text-4xl md:text-5xl font-black text-white">代表项目</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Project 1 - Featured -->
+      <div class="project-card rounded-2xl p-7 md:col-span-2 animate-on-scroll">
+        <div class="flex flex-col md:flex-row md:items-start gap-6">
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-xs px-2.5 py-1 rounded-md bg-neon-green/10 text-neon-green border border-neon-green/20 font-medium">标杆项目</span>
+              <span class="text-xs text-gray-500">古镇口片区</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">绿色微电网投建营一体化项目</h3>
+            <p class="text-gray-400 leading-relaxed">主导古镇口片区绿色微电网投建营一体化项目整体推进，项目总规模约 5 亿元。负责前期需求梳理、技术路线规划、收益模型测算及投融资方案设计。成功对接金融机构，推动项目一期 3.2 亿元获得约 62.5% 银行贷款支持，参与 SPV 公司设立与运作。在交付阶段统筹多方资源协同，完成绿色电力建设与项目收益闭环。</p>
+          </div>
+          <div class="flex-shrink-0 flex gap-3">
+            <div class="stat-card rounded-lg p-4 text-center min-w-[90px]">
+              <p class="text-2xl font-black text-neon-green font-display">5亿</p>
+              <p class="text-xs text-gray-500">总规模</p>
+            </div>
+            <div class="stat-card rounded-lg p-4 text-center min-w-[90px]">
+              <p class="text-2xl font-black text-neon-cyan font-display">3.2亿</p>
+              <p class="text-xs text-gray-500">一期</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card rounded-2xl p-7 animate-on-scroll">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-xs px-2.5 py-1 rounded-md bg-neon-cyan/10 text-neon-cyan border border-neon-cyan/20 font-medium">项目负责人</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">"智联谷"绿色低碳园区</h3>
+        <p class="text-gray-400 leading-relaxed">统筹"智联谷"绿色低碳园区中光储充一体化、智慧食堂等项目的整体方案规划、交付实施与运维体系建设。项目落地后获评 <span class="text-neon-green font-medium">"2024年度青岛市工业园区微电网运营行业数字化转型赋能中心"</span>。</p>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-card rounded-2xl p-7 animate-on-scroll">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-xs px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20 font-medium">AI 应用</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">AI 测算工具落地项目</h3>
+        <p class="text-gray-400 leading-relaxed">在光伏配储、微电网项目中应用 AI 测算工具 DRe 及 Enerbot，参与华物流科技园、海西湾等兆瓦级场景测算。形成"场景输入—模型测算—结果解释—客户沟通"的闭环，将 AI 工具能力转化为业务价值。</p>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project-card rounded-2xl p-7 animate-on-scroll">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-xs px-2.5 py-1 rounded-md bg-neon-green/10 text-neon-green border border-neon-green/20 font-medium">EMC</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">合同能源管理节能改造</h3>
+        <p class="text-gray-400 leading-relaxed">对接海信地产旗下 <span class="text-neon-green font-medium">30+</span> 个小区节能改造项目，参与能耗调研、节能潜力分析、技术方案设计、收益测算及合同能源管理方案制定。统筹施工管理与最终交付。</p>
+      </div>
+
+      <!-- Project 5 -->
+      <div class="project-card rounded-2xl p-7 animate-on-scroll">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-xs px-2.5 py-1 rounded-md bg-neon-cyan/10 text-neon-cyan border border-neon-cyan/20 font-medium">全流程</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">目的地充电站建设</h3>
+        <p class="text-gray-400 leading-relaxed">负责六合社区等目的地充电桩项目全流程工作：前期现场勘查、容量评估、客户技术沟通，中期方案确定、施工协调，后期交付调试、客户培训及运营支持。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- Education Section -->
+<section id="education" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <p class="text-neon-green text-sm tracking-[0.2em] uppercase mb-3">Education</p>
+      <h2 class="text-4xl md:text-5xl font-black text-white">教育背景</h2>
+    </div>
+    <div class="animate-on-scroll slide-right">
+      <div class="project-card rounded-2xl p-7 max-w-2xl">
+        <div class="flex flex-col md:flex-row md:items-center gap-2 mb-3">
+          <span class="text-neon-green font-mono text-sm">2016.09 - 2020.06</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-1">吉林建筑大学</h3>
+        <p class="text-gray-400 mb-4">电气工程及其自动化（本科）</p>
+        <div class="flex flex-wrap gap-3">
+          <span class="text-xs px-3 py-1 rounded-full bg-neon-green/10 text-neon-green border border-neon-green/20">校级奖学金 (2017-2018)</span>
+          <span class="text-xs px-3 py-1 rounded-full bg-neon-green/10 text-neon-green border border-neon-green/20">校优秀青马会员 (2019-2020)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-16 px-6 border-t border-white/5">
+  <div class="max-w-6xl mx-auto text-center">
+    <p class="text-2xl font-bold text-white mb-3">肖铭志</p>
+    <p class="text-gray-500 mb-6">综合能源场景方案经理 &middot; 青岛市高新区</p>
+    <button onclick="openContactModal()" class="cta-btn px-8 py-3 rounded-full text-base">
+      取得联系
+    </button>
+    <p class="text-gray-600 text-sm mt-10">&copy; 2026 肖铭志. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Contact Modal -->
+<div id="contactModal" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-6">
+  <div class="modal-content bg-dark-800 border border-white/10 rounded-2xl p-8 max-w-md w-full relative">
+    <button onclick="closeContactModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors text-2xl leading-none">&times;</button>
+    <h3 class="text-2xl font-bold text-white mb-2">联系我</h3>
+    <p class="text-gray-400 mb-6 text-sm">期待与您交流综合能源领域的合作机会</p>
+
+    <div class="space-y-4 mb-6">
+      <a href="tel:18686588899" class="flex items-center gap-4 p-4 rounded-xl bg-dark-700 hover:bg-dark-600 border border-white/5 hover:border-neon-green/20 transition-all group">
+        <div class="w-10 h-10 rounded-lg bg-neon-green/10 flex items-center justify-center text-neon-green group-hover:bg-neon-green/20 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500">电话</p>
+          <p class="text-white font-medium">186 8658 8899</p>
+        </div>
+      </a>
+      <a href="mailto:1515088747@qq.com" class="flex items-center gap-4 p-4 rounded-xl bg-dark-700 hover:bg-dark-600 border border-white/5 hover:border-neon-cyan/20 transition-all group">
+        <div class="w-10 h-10 rounded-lg bg-neon-cyan/10 flex items-center justify-center text-neon-cyan group-hover:bg-neon-cyan/20 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500">邮箱</p>
+          <p class="text-white font-medium">1515088747@qq.com</p>
+        </div>
+      </a>
+      <div class="flex items-center gap-4 p-4 rounded-xl bg-dark-700 border border-white/5">
+        <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500">所在地</p>
+          <p class="text-white font-medium">青岛市高新区</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="contactForm" class="space-y-3">
+      <input type="text" id="contactName" placeholder="您的称呼" class="w-full px-4 py-3 rounded-lg bg-dark-700 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-neon-green/40 transition-colors text-sm">
+      <textarea id="contactMsg" placeholder="留言内容..." rows="3" class="w-full px-4 py-3 rounded-lg bg-dark-700 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-neon-green/40 transition-colors text-sm resize-none"></textarea>
+      <button onclick="sendMessage()" class="w-full cta-btn px-6 py-3 rounded-lg text-sm">发送消息</button>
+      <p id="formFeedback" class="text-center text-sm hidden"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+// Contact Modal
+function openContactModal() {
+  document.getElementById('contactModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeContactModal() {
+  document.getElementById('contactModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('contactModal').addEventListener('click', function(e) {
+  if (e.target === this) closeContactModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeContactModal();
+});
+
+// Send message (mailto fallback)
+function sendMessage() {
+  const name = document.getElementById('contactName').value.trim();
+  const msg = document.getElementById('contactMsg').value.trim();
+  const feedback = document.getElementById('formFeedback');
+
+  if (!name || !msg) {
+    feedback.textContent = '请填写称呼和留言内容';
+    feedback.className = 'text-center text-sm text-red-400';
+    feedback.classList.remove('hidden');
+    return;
+  }
+
+  const subject = encodeURIComponent('来自个人主页的留言 - ' + name);
+  const body = encodeURIComponent('留言人：' + name + '\n\n' + msg);
+  window.open('mailto:1515088747@qq.com?subject=' + subject + '&body=' + body);
+
+  feedback.textContent = '感谢留言！已打开邮件客户端';
+  feedback.className = 'text-center text-sm text-neon-green';
+  feedback.classList.remove('hidden');
+  document.getElementById('contactName').value = '';
+  document.getElementById('contactMsg').value = '';
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, index * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (window.scrollY > 50) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
+</script>
+</body>
+</html>
